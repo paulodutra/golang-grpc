@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+	
 	"github.com/paulodutra/golang-grpc/internal/database"
 	"github.com/paulodutra/golang-grpc/internal/pb"
 )
@@ -16,8 +18,8 @@ func NewCategoryService(categoryDB database.Category) *CategoryService {
 	}
 }
 
-func (c *CategoryService) CreateCategory(ctx context.Context, in *pb.CreateCategoryRequest) (*pb.CategoryResponse, error) {
-	category, err := c.CategoryDB.Create(in.name, in.description)
+func (c *CategoryService) CreateCategory(ctx context.Context, in *pb.CreateCategoryRequest) (*pb.Category, error) {
+	category, err := c.CategoryDB.Create(in.Name, in.Description)
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +27,7 @@ func (c *CategoryService) CreateCategory(ctx context.Context, in *pb.CreateCateg
 	categoryResponse := &pb.Category{
 		Id:			 category.ID,
 		Name: 	     category.Name,
-		Description: category.Description
+		Description: category.Description,
 	}
 
 	return &pb.CategoryResponse{
