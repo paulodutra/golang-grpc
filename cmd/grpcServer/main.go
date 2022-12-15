@@ -32,7 +32,7 @@ func main() {
 		panic(err)
 	}
 
-	if err := grpcServer.Server(listen); err != nil {
+	if err := grpcServer.Serve(listen); err != nil {
 		panic(err)
 	}
 
